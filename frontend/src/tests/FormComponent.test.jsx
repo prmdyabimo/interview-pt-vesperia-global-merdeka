@@ -1,3 +1,4 @@
+// src/__tests__/FormComponent.test.js
 import React from "react";
 import { render, screen, fireEvent, waitFor } from "@testing-library/react";
 import "@testing-library/jest-dom";
@@ -9,7 +10,7 @@ const mockTextField = {
   id: "test-field",
   label: "Test Field",
   type: "text",
-  subType: "text",
+  sub_type: "text",
   description: "This is a test field",
 };
 
@@ -17,7 +18,7 @@ const mockDateField = {
   id: "test-date",
   label: "Test Date",
   type: "text",
-  subType: "date",
+  sub_type: "date",
   description: "This is a test date field",
 };
 
@@ -25,7 +26,7 @@ const mockAmountField = {
   id: "test-amount",
   label: "Test Amount",
   type: "text",
-  subType: "amount",
+  sub_type: "amount",
   description: "This is a test amount field",
 };
 
