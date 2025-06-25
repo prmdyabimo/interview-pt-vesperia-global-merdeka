@@ -5,7 +5,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
 Route::middleware(['cors', 'api_key'])->group(function () {
-    Route::prefix('forms')->group(function () {
+    Route::prefix('v1/forms')->group(function () {
         // Get All Forms
         Route::get('/', [FormController::class, 'getForms']);
 
@@ -19,7 +19,7 @@ Route::middleware(['cors', 'api_key'])->group(function () {
 
     });
 
-    Route::prefix('submissions')->group(function () {
+    Route::prefix('v1/submissions')->group(function () {
         // Get Submissions
         Route::get('/', [FormController::class, 'getFormSubmissions']);
     });

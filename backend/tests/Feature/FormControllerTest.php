@@ -19,7 +19,7 @@ class FormControllerTest extends TestCase
 
     public function test_get_all_forms()
     {
-        $response = $this->getJson('/api/forms');
+        $response = $this->getJson('/api/v1/forms');
 
         $response->assertStatus(200)
             ->assertJsonStructure([
@@ -32,10 +32,10 @@ class FormControllerTest extends TestCase
 
     public function test_get_kejadian_form()
     {
-        $response = $this->getJson('/api/forms/kejadian');
+        $response = $this->getJson('/api/v1/forms/kejadian');
 
         if ($response->status() === 404) {
-            $this->markTestSkipped('Route /api/forms/kejadian returns 404 - possible environment difference');
+            $this->markTestSkipped('Route /api/v1/forms/kejadian returns 404 - possible environment difference');
         }
 
         if ($response->status() === 500) {
@@ -60,10 +60,10 @@ class FormControllerTest extends TestCase
 
     public function test_get_kerugian_form()
     {
-        $response = $this->getJson('/api/forms/kerugian');
+        $response = $this->getJson('/api/v1/forms/kerugian');
 
         if ($response->status() === 404) {
-            $this->markTestSkipped('Route /api/forms/kerugian returns 404 - possible environment difference');
+            $this->markTestSkipped('Route /api/v1/forms/kerugian returns 404 - possible environment difference');
         }
 
         if ($response->status() === 500) {
@@ -83,7 +83,7 @@ class FormControllerTest extends TestCase
 
     public function test_invalid_form_type_returns_404()
     {
-        $response = $this->getJson('/api/forms/invalid');
+        $response = $this->getJson('/api/v1/forms/invalid');
 
         $this->assertEquals(404, $response->status());
 
@@ -121,10 +121,10 @@ class FormControllerTest extends TestCase
             ]
         ];
 
-        $response = $this->postJson('/api/forms/kejadian/submit', $data);
+        $response = $this->postJson('/api/v1/forms/kejadian/submit', $data);
 
         if ($response->status() === 404) {
-            $this->markTestSkipped('Route /api/forms/kejadian/submit returns 404 - possible environment difference');
+            $this->markTestSkipped('Route /api/v1/forms/kejadian/submit returns 404 - possible environment difference');
         }
 
         if ($response->status() === 500) {
@@ -161,10 +161,10 @@ class FormControllerTest extends TestCase
             ]
         ];
 
-        $response = $this->postJson('/api/forms/kerugian/submit', $data);
+        $response = $this->postJson('/api/v1/forms/kerugian/submit', $data);
 
         if ($response->status() === 404) {
-            $this->markTestSkipped('Route /api/forms/kerugian/submit returns 404 - possible environment difference');
+            $this->markTestSkipped('Route /api/v1/forms/kerugian/submit returns 404 - possible environment difference');
         }
 
         if ($response->status() === 500) {
@@ -180,7 +180,7 @@ class FormControllerTest extends TestCase
 
     public function test_submit_form_with_missing_data()
     {
-        $response = $this->postJson('/api/forms/kejadian/submit', []);
+        $response = $this->postJson('/api/v1/forms/kejadian/submit', []);
 
         $this->assertContains($response->status(), [404, 422, 500]);
 
@@ -195,7 +195,7 @@ class FormControllerTest extends TestCase
             'formType' => 'kejadian'
         ];
 
-        $response = $this->postJson('/api/forms/kejadian/submit', $data);
+        $response = $this->postJson('/api/v1/forms/kejadian/submit', $data);
 
         if (!in_array($response->status(), [404, 500])) {
             $this->assertContains($response->status(), [400, 422]);
@@ -204,10 +204,10 @@ class FormControllerTest extends TestCase
 
     public function test_get_form_submissions()
     {
-        $response = $this->getJson('/api/submissions');
+        $response = $this->getJson('/api/v1/submissions');
 
         if ($response->status() === 404) {
-            $this->markTestSkipped('Route /api/forms/submissions returns 404 - possible environment difference');
+            $this->markTestSkipped('Route /api/v1/forms/submissions returns 404 - possible environment difference');
         }
 
         if ($response->status() === 500) {
@@ -230,7 +230,7 @@ class FormControllerTest extends TestCase
 
     public function test_get_form_submissions_returns_actual_data()
     {
-        $response = $this->getJson('/api/submissions');
+        $response = $this->getJson('/api/v1/submissions');
 
         if (in_array($response->status(), [404, 500])) {
             $this->markTestSkipped('Submissions endpoint not available in test environment');
@@ -248,7 +248,7 @@ class FormControllerTest extends TestCase
 
     public function test_api_response_format_consistency()
     {
-        $response = $this->getJson('/api/forms');
+        $response = $this->getJson('/api/v1/forms');
         $response->assertStatus(200);
 
         $response->assertJsonStructure([
@@ -263,7 +263,7 @@ class FormControllerTest extends TestCase
 
     public function test_pagination_parameters()
     {
-        $response = $this->getJson('/api/submissions?page=1&per_page=5');
+        $response = $this->getJson('/api/v1/submissions?page=1&per_page=5');
 
         if (in_array($response->status(), [404, 500])) {
             $this->markTestSkipped('Submissions endpoint not available in test environment');
@@ -280,12 +280,12 @@ class FormControllerTest extends TestCase
 
     public function test_environment_check()
     {
-        $response = $this->getJson('/api/forms');
+        $response = $this->getJson('/api/v1/forms');
 
         $this->assertEquals(
             200,
             $response->status(),
-            'Basic /api/forms endpoint should work in test environment'
+            'Basic /api/v1/forms endpoint should work in test environment'
         );
 
         $data = $response->json();
@@ -296,7 +296,7 @@ class FormControllerTest extends TestCase
 
     public function test_form_types_structure()
     {
-        $response = $this->getJson('/api/forms');
+        $response = $this->getJson('/api/v1/forms');
         $response->assertStatus(200);
 
         $data = $response->json();
